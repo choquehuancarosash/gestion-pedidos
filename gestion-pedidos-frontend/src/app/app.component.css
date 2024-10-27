@@ -1,0 +1,19 @@
+/* Asegúrate de que el fondo negro se aplique a toda la página */
+html, body {
+  height: 100%; /* Para asegurarte de que ocupe toda la altura de la pantalla */
+  margin: 0; /* Elimina márgenes */
+  background-color: black; /* Fondo negro */
+  color: white; /* Letras en blanco */
+  overflow: hidden; /* Oculta el scroll */
+}
+
+h1 {
+  text-align: center; /* Centra el título */
+  margin-top: 20px; /* Espaciado superior para el título */
+}
+
+/* Estilos para el mat-tab-group */
+mat-tab-group {
+  margin: 0 auto; /* Centra el mat-tab-group */
+  width: 80%; /* Ajusta el ancho como desees */
+}

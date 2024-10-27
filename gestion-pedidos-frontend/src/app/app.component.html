@@ -1,1 +1,9 @@
+<h1>Gestión de Pedidos</h1>
+
+<mat-tab-group [(selectedIndex)]="activeTabIndex" (selectedTabChange)="onTabChange($event)">
+  <mat-tab label="Clientes"></mat-tab>
+  <mat-tab label="Productos"></mat-tab>
+  <mat-tab label="Pedidos"></mat-tab>
+</mat-tab-group>
+
 <router-outlet></router-outlet>
