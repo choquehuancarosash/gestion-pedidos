@@ -10,16 +10,16 @@ import { Cliente } from '../../../models/cliente.model';
 export class ClienteListComponent implements OnInit {
   clientes: Cliente[] = [];
 
-  constructor(private clienteService: ClienteService) {}
+  // constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
-    this.clienteService.getClientes().subscribe({
-      next: (clientes: Cliente[]) => {
-        this.clientes = clientes; 
-      },
-      error: (error) => {
-        console.error('Error al obtener los clientes', error);
-      }
-    });
+    // this.clienteService.getClientes().subscribe({
+    //   next: (clientes: Cliente[]) => {
+    //     this.clientes = clientes; 
+    //   },
+    //   error: (error) => {
+    //     console.error('Error al obtener los clientes', error);
+    //   }
+    // });
   }
 }
