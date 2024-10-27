@@ -1,5 +1,6 @@
 package com.gestionpedidos.gestion_pedidos.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,7 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Transient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +19,7 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id; // Cambiar de String a Long
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
@@ -26,13 +29,25 @@ public class Pedido {
     @JoinTable(name = "pedido_producto", joinColumns = @JoinColumn(name = "pedido_id"), inverseJoinColumns = @JoinColumn(name = "producto_id"))
     private List<Producto> productos;
 
-    private Double total;
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", cliente=" + (cliente != null ? cliente.getId() : "null") + // Muestra solo el ID del cliente
+                ", productos=" + (productos != null ? productos.size() : "null") + // Muestra el tamaño de la lista de
+                                                                                   // productos
+                '}';
+    }
 
-    public Long getId() { // Cambiar el tipo de retorno a Long
+    public Pedido() {
+        this.productos = new ArrayList<>(); // Inicializa la lista
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id) { // Cambiar el parámetro a Long
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,11 +67,14 @@ public class Pedido {
         this.productos = productos;
     }
 
+    @Transient
     public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
+        if (productos == null) {
+            return 0.0; // Retorna un valor por defecto
+        }
+        return productos.stream()
+                .filter(producto -> producto.getPrecio() != null) // Filtra precios nulos
+                .mapToDouble(Producto::getPrecio)
+                .sum();
     }
 }

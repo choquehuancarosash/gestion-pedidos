@@ -1,6 +1,8 @@
 package com.gestionpedidos.gestion_pedidos.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.gestionpedidos.gestion_pedidos.models.Pedido;
@@ -26,8 +28,16 @@ public class PedidoController {
     }
 
     @PostMapping
-    public Pedido crearPedido(@RequestBody Pedido pedido) {
-        return pedidoService.crearPedido(pedido);
+    public ResponseEntity crearPedido(@RequestBody Pedido pedido) {
+        System.out.println("PEDIDOOOO: " + pedido);
+        try {
+            Pedido nuevoPedido = pedidoService.crearPedido(pedido);
+            return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PutMapping("/{id}")
