@@ -7,13 +7,11 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ClienteService {
-  private apiUrl = 'http://localhost:8080/api/clientes'; // Cambia según tu API
-
+  private apiUrl = 'http://localhost:8080/api/clientes';
+  
   constructor(private http: HttpClient) { }
 
   getClientes(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.apiUrl);
   }
-
-  // Métodos para crear, actualizar y eliminar clientes
 }

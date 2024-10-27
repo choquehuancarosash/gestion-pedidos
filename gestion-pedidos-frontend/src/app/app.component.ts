@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterOutlet, Router } from '@angular/router';
+import { Cliente } from './models/cliente.model';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,12 @@ export class AppComponent {
       this.syncActiveTab();
     });
   }
+
+  clientes: Cliente[] = [
+    { id: 1, nombre: 'Cliente A', email: 'clienteA@example.com' },
+    { id: 2, nombre: 'Cliente B', email: 'clienteB@example.com' },
+    { id: 3, nombre: 'Cliente C', email: 'clienteC@example.com' }
+  ];
 
   syncActiveTab() {
     const currentRoute = this.router.url;

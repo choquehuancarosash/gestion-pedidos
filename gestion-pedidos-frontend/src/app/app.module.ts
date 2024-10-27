@@ -1,28 +1,33 @@
-import { NgModule  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { ClienteListComponent } from './pages/clientes/cliente-list/cliente-list.component';
+import { provideHttpClient } from '@angular/common/http'; // Importa HttpClientModule
 import { PedidoListComponent } from './pages/pedidos/pedido-list/pedido-list.component';
 import { ProductoListComponent } from './pages/productos/producto-list/producto-list.component';
 import { HomeComponent } from './pages/home/home.component';
-import { MatTabsModule } from '@angular/material/tabs'; // Importa MatTabsModule
-import { RouterModule } from '@angular/router'; // Importa RouterModule
+import { MatTabsModule } from '@angular/material/tabs';
+import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
+import { ClienteListModule } from './pages/clientes/cliente-list/cliente-list.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteListComponent,
     PedidoListComponent,
     ProductoListComponent,
     HomeComponent,
   ],
   imports: [
     BrowserModule,
-    MatTabsModule, // Asegúrate de que este módulo esté importado aquí
-    RouterModule.forRoot(routes)  // Agrega RouterModule aquí
+    BrowserAnimationsModule, // Debe estar antes de los módulos de Angular Material
+    ClienteListModule, // Importa tu módulo de clientes
+    MatTabsModule,
+    RouterModule.forRoot(routes),
   ],
-  providers: [],
+  providers: [
+    provideHttpClient() // Esto se puede dejar como está
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
