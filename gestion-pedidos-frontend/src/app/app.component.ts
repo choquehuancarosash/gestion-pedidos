@@ -12,10 +12,9 @@ import { Cliente } from './models/cliente.model';
 })
 export class AppComponent {
   title = 'gestion-pedidos-frontend';
-  activeTabIndex: number = 0; // Índice del tab activo inicial
+  activeTabIndex: number = 0;
 
   constructor(private router: Router) {
-    // Sincroniza el índice de la pestaña con la ruta al cargar el componente
     this.router.events.subscribe(() => {
       this.syncActiveTab();
     });
@@ -39,7 +38,7 @@ export class AppComponent {
   }
 
   onTabChange(event: any) {
-    this.activeTabIndex = event.index; // Actualiza el índice activo
+    this.activeTabIndex = event.index;
     switch (event.index) {
       case 0:
         this.router.navigate(['/clientes']);

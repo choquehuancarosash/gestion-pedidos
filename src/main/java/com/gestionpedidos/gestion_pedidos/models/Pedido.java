@@ -33,14 +33,14 @@ public class Pedido {
     public String toString() {
         return "Pedido{" +
                 "id=" + id +
-                ", cliente=" + (cliente != null ? cliente.getId() : "null") + // Muestra solo el ID del cliente
-                ", productos=" + (productos != null ? productos.size() : "null") + // Muestra el tamaño de la lista de
-                                                                                   // productos
+                ", cliente=" + (cliente != null ? cliente.getId() : "null") +
+                ", productos=" + (productos != null ? productos.size() : "null") +
+
                 '}';
     }
 
     public Pedido() {
-        this.productos = new ArrayList<>(); // Inicializa la lista
+        this.productos = new ArrayList<>();
     }
 
     public Long getId() {
@@ -70,10 +70,10 @@ public class Pedido {
     @Transient
     public Double getTotal() {
         if (productos == null) {
-            return 0.0; // Retorna un valor por defecto
+            return 0.0;
         }
         return productos.stream()
-                .filter(producto -> producto.getPrecio() != null) // Filtra precios nulos
+                .filter(producto -> producto.getPrecio() != null)
                 .mapToDouble(Producto::getPrecio)
                 .sum();
     }

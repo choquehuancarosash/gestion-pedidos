@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { provideHttpClient } from '@angular/common/http'; // Importa HttpClientModule
+import { provideHttpClient } from '@angular/common/http';
 import { PedidoListComponent } from './pages/pedidos/pedido-list/pedido-list.component';
 import { ProductoListComponent } from './pages/productos/producto-list/producto-list.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -20,13 +20,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule, // Debe estar antes de los módulos de Angular Material
-    ClienteListModule, // Importa tu módulo de clientes
+    BrowserAnimationsModule,
+    ClienteListModule,
     MatTabsModule,
     RouterModule.forRoot(routes),
   ],
   providers: [
-    provideHttpClient() // Esto se puede dejar como está
+    provideHttpClient() 
   ],
   bootstrap: [AppComponent]
 })

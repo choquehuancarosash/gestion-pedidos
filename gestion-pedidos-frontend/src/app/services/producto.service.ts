@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ProductoService {
-  private apiUrl = 'http://localhost:8080/api/productos'; // Cambia según tu API
+  private apiUrl = 'http://localhost:8080/api/productos';
 
   constructor(private http: HttpClient) { }
 
@@ -15,5 +15,4 @@ export class ProductoService {
     return this.http.get<Producto[]>(this.apiUrl);
   }
 
-  // Métodos para crear, actualizar y eliminar productos
 }

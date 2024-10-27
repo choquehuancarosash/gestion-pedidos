@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class PedidoService {
-  private apiUrl = 'http://localhost:8080/api/pedidos'; // Cambia según tu API
+  private apiUrl = 'http://localhost:8080/api/pedidos';
 
   constructor(private http: HttpClient) { }
 
@@ -15,5 +15,5 @@ export class PedidoService {
     return this.http.get<Pedido[]>(this.apiUrl);
   }
 
-  // Métodos para crear, actualizar y eliminar pedidos
+ 
 }

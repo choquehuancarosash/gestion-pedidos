@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Asegúrate de importar CommonModule
-import { ClienteListComponent } from './cliente-list.component'; // Importa el componente ClienteListComponent
+import { CommonModule } from '@angular/common';
+import { ClienteListComponent } from './cliente-list.component'; 
 
 @NgModule({
   declarations: [
-    ClienteListComponent // Declara el componente ClienteListComponent
+    ClienteListComponent
   ],
   imports: [
-    CommonModule // Importa CommonModule para habilitar las directivas *ngFor y *ngIf
+    CommonModule 
   ],
   exports: [
-    ClienteListComponent // Exporta el componente si lo necesitas en otros módulos
+    ClienteListComponent
   ]
 })
 export class ClienteListModule { }
