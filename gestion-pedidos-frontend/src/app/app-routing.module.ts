@@ -1,4 +1,4 @@
-// app.routes.ts
+// app.routes.ts (ya no un módulo)
 import { Routes } from '@angular/router';
 import { ClienteListComponent } from './pages/clientes/cliente-list/cliente-list.component';
 import { PedidoListComponent } from './pages/pedidos/pedido-list/pedido-list.component';
