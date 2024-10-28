@@ -1,19 +1,14 @@
 <div class="clientes-list">
-  <h2>Lista de Clientes</h2>
-  <div class="card-container">
-      <div class="card">
-          <h3 class="card-title">Hans Choquehaunca</h3>
-          <p class="card-subtitle">ID: 1</p>
+    <h2>Lista de Clientes</h2>
+    <div class="card-container">
+      @for (item of data; track item.id) {
+        <div class="card">
+          <h3 class="card-title">{{ item.nombre }}</h3>
+          <p class="card-subtitle">ID: {{ item.id }}</p>
           <div class="card-content">
-              <p>Email: hans.choquehaunca&#64;.com</p>
+            <p>Email: {{ item.email }}</p>
           </div>
-      </div>
-      <div class="card">
-          <h3 class="card-title">Anthony Rosas</h3>
-          <p class="card-subtitle">ID: 2</p>
-          <div class="card-content">
-              <p>Email: anthony.rosas&#64;gmail.com</p>
-          </div>
-      </div>
-  </div>
-</div>
+        </div>
+      }
+    </div>
+  </div>  

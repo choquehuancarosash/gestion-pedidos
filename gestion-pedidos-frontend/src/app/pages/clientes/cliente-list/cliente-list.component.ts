@@ -5,21 +5,19 @@ import { Cliente } from '../../../models/cliente.model';
 @Component({
   selector: 'app-cliente-list',
   templateUrl: './cliente-list.component.html',
-  styleUrls: ['./cliente-list.component.css']
+  styleUrls: ['./cliente-list.component.css'],
 })
 export class ClienteListComponent implements OnInit {
-  clientes: Cliente[] = [];
-
-  // constructor(private clienteService: ClienteService) {}
+  data: Cliente[] = [];
+  constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
-    // this.clienteService.getClientes().subscribe({
-    //   next: (clientes: Cliente[]) => {
-    //     this.clientes = clientes; 
-    //   },
-    //   error: (error) => {
-    //     console.error('Error al obtener los clientes', error);
-    //   }
-    // });
+    this.lista();
+  }
+
+  lista() {
+    this.clienteService.getClientes().subscribe((x) => {
+      this.data = x;
+    });
   }
 }
