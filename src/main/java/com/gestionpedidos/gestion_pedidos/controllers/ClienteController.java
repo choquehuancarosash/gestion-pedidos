@@ -1,6 +1,8 @@
 package com.gestionpedidos.gestion_pedidos.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.gestionpedidos.gestion_pedidos.models.Cliente;
@@ -21,22 +23,39 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public Cliente obtenerCliente(@PathVariable Long id) {
-        return clienteService.obtenerCliente(id);
+    public ResponseEntity<Cliente> obtenerCliente(@PathVariable Long id) {
+        Cliente cliente = clienteService.obtenerCliente(id);
+        return cliente != null ? new ResponseEntity<>(cliente, HttpStatus.OK)
+                               : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping
-    public Cliente crearCliente(@RequestBody Cliente cliente) {
-        return clienteService.crearCliente(cliente);
+    public ResponseEntity<String> crearCliente(@RequestBody Cliente cliente) {
+        try {
+            Cliente nuevoCliente = clienteService.crearCliente(cliente);
+            return new ResponseEntity<>("Cliente creado con ID: " + nuevoCliente.getId(), HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PutMapping("/{id}")
-    public Cliente actualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteActualizado) {
-        return clienteService.actualizarCliente(id, clienteActualizado);
+    public ResponseEntity<String> actualizarCliente(@PathVariable Long id, @RequestBody Cliente clienteActualizado) {
+        try {
+            clienteService.actualizarCliente(id, clienteActualizado);
+            return new ResponseEntity<>("Cliente actualizado con ID: " + id, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarCliente(@PathVariable Long id) {
-        clienteService.eliminarCliente(id);
+    public ResponseEntity<String> eliminarCliente(@PathVariable Long id) {
+        try {
+            clienteService.eliminarCliente(id);
+            return new ResponseEntity<>("Cliente eliminado con ID: " + id, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.gestionpedidos.gestion_pedidos.exceptions.ProductoNoEncontradoException;
 import com.gestionpedidos.gestion_pedidos.models.Pedido;
 import com.gestionpedidos.gestion_pedidos.services.PedidoService;
 
@@ -18,35 +19,55 @@ public class PedidoController {
     private PedidoService pedidoService;
 
     @GetMapping
-    public List<Pedido> listarPedidos() {
-        return pedidoService.listarPedidos();
+    public ResponseEntity<List<Pedido>> listarPedidos() {
+        List<Pedido> pedidos = pedidoService.listarPedidos();
+        return new ResponseEntity<>(pedidos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Pedido obtenerPedido(@PathVariable Long id) {
-        return pedidoService.obtenerPedido(id);
+    public ResponseEntity<Pedido> obtenerPedido(@PathVariable Long id) {
+        try {
+            Pedido pedido = pedidoService.obtenerPedido(id);
+            return new ResponseEntity<>(pedido, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping
-    public ResponseEntity crearPedido(@RequestBody Pedido pedido) {
-        System.out.println("PEDIDOOOO: " + pedido);
+    public ResponseEntity<Pedido> crearPedido(@RequestBody Pedido pedido) {
         try {
             Pedido nuevoPedido = pedidoService.crearPedido(pedido);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoPedido);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
+        } catch (ProductoNoEncontradoException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Captura la nueva excepción
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
     @PutMapping("/{id}")
-    public Pedido actualizarPedido(@PathVariable Long id, @RequestBody Pedido pedidoActualizado) {
-        return pedidoService.actualizarPedido(id, pedidoActualizado);
+    public ResponseEntity<Pedido> actualizarPedido(@PathVariable Long id, @RequestBody Pedido pedidoActualizado) {
+        try {
+            Pedido pedido = pedidoService.actualizarPedido(id, pedidoActualizado);
+            if (pedido == null) {
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(pedido, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarPedido(@PathVariable Long id) {
-        pedidoService.eliminarPedido(id);
+    public ResponseEntity<String> eliminarPedido(@PathVariable Long id) {
+        try {
+            pedidoService.eliminarPedido(id);
+            return new ResponseEntity<>("Pedido eliminado con ID: " + id, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }
